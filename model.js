@@ -1,8 +1,4 @@
 
-// Implémenter ici les 4 classes du modèle.
-// N'oubliez pas l'héritage !
-
-
 
 function Drawing(){
   this.forms = new Array();
@@ -17,11 +13,13 @@ function Drawing(){
 }
 
 
-function MyForm(initX,initY,finalX,finalY) {
+function MyForm(initX,initY,finalX,finalY,epaisseur,couleur) {
   this.initX = initX;
   this.initY = initY;
   this.finalX = finalX;
   this.finalY = finalY;
+  this.epaisseur = epaisseur;
+  this.couleur = couleur;
 
   this.getInitX = function() {
     return   this.initX;
@@ -40,14 +38,23 @@ function MyForm(initX,initY,finalX,finalY) {
 
   }.bind(this) ;
 
+  this.getEpaisseur = function() {
+    return   this.epaisseur;
+
+  }.bind(this) ;
+
+  this.getCouleur = function() {
+    return   this.couleur;
+  }.bind(this) ;
+
 }
 
-function Line(initX,initY,finalX,finalY){
-  MyForm.call(this, initX,initY,finalX,finalY);
+function Line(initX,initY,finalX,finalY,epaisseur,couleur){
+  MyForm.call(this, initX,initY,finalX,finalY,epaisseur,couleur);
 };
 Line.prototype = new MyForm();
 
-function Rectangle(initX,initY,finalX,finalY){
-    MyForm.call(this, initX,initY,finalX,finalY);
+function Rectangle(initX,initY,finalX,finalY,epaisseur,couleur){
+    MyForm.call(this, initX,initY,finalX,finalY,epaisseur,couleur);
 };
 Rectangle.prototype = new MyForm();

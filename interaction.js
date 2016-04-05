@@ -2,19 +2,6 @@
 // La création d'un Dnd requière un canvas et un interacteur.
 // L'interacteur viendra dans un second temps donc ne vous en souciez pas au départ.
 
-//var canevas = document.getElementById('myCanvas');
-
-
-/*function DnD(canvas, interactor) {
-	// Définir ici les attributs de la 'classe'
-
-	// Developper les 3 fonctions gérant les événements
-
-	// Associer les fonctions précédentes aux évènements du canvas.
-};
-*/
-
-
 
 function DnD(boundingObject, interactor) {
   this.initX = 0;
@@ -48,23 +35,15 @@ function DnD(boundingObject, interactor) {
     this.pression = true;
     this.initX = getMousePosition(this.boundingObject,evt).x;
     this.initY = getMousePosition(this.boundingObject,evt).y;
-    //console.log(this.initX);
-    //console.log(this.initY);
-    //console.log("maFctGerantLaPression");
     this.interactor.onInteractionStart(this);
 
   }.bind(this) ;
 
   this.maFctGerantLeDeplacement = function(evt) {
     if (this.pression){
-    //  this.wait = false;
       this.finalX = getMousePosition(this.boundingObject,evt).x;
       this.finalY = getMousePosition(this.boundingObject,evt).y;
       this.interactor.onInteractionUpdate(this);
-    //  console.log("pass par la")
-    //  setTimeout(function(){this.wait = true;  }, 50);
-
-
     }
 
   }.bind(this) ;
@@ -88,10 +67,8 @@ function DnD(boundingObject, interactor) {
 
 function getMousePosition(can,evt) {
   var rect = can.getBoundingClientRect();
-  //console.log(can);
-  //console.log(evt);
   return {
-    x: evt.x - rect.left,
-    y: evt.y - rect.top
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top
   };
 };

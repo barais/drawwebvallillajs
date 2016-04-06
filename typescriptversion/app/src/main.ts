@@ -21,6 +21,34 @@ var pencil = new ctrl.Pencil(ctx, drawing, canvas);
 
 drawing.draw(canvas,ctx);
 
+
 document.getElementById('save').onclick = (e:MouseEvent)=> {
-  console.log("log");
+  var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+	xmlhttp.open("POST", "/rest/titi");
+	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+	console.log('{ \"figs\" : '+ JSON.stringify(drawing.getForms())+'}');
+	xmlhttp.send('{ \"figs\" : '+ JSON.stringify(drawing.getForms())+'}');
+
+};
+
+document.getElementById('load').onclick = (e:MouseEvent)=> {
+	var req = new XMLHttpRequest();   // new HttpRequest instance
+	req.open("GET", "/rest/titi/load");
+	req.onreadystatechange = function (aEvt) {
+		  if (req.readyState == 4) {
+		     if(req.status == 200){
+		      console.log(req.responseText);
+		      console.log(JSON.parse(req.responseText).figs);
+		     document.getElementById('parent').removeChild( document.getElementById('save'));
+		     }
+		     else{
+		      console.log(("Erreur pendant le chargement de la page.\n + " + req.status + " " + req.responseText));
+		      console.log(req)
+		     }
+		  }
+		};
+		req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+//	console.log('{ \"figs\" : '+ JSON.stringify(drawing.getForms())+'}');
+		req.send();
+
 };

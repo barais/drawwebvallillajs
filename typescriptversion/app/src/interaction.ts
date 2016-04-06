@@ -18,6 +18,7 @@ export class DnD {
       this.initY = getMousePosition(boundingObject, evt).y;
       interactor.onInteractionStart(this);
     }
+
     this.boundingObject.onmousemove = (evt: MouseEvent) => {
       if (this.pression) {
         this.finalX = getMousePosition(boundingObject, evt).x;
@@ -59,6 +60,7 @@ export class DnD {
 };
 export function getMousePosition(can: HTMLCanvasElement, evt: MouseEvent) {
   var rect = can.getBoundingClientRect();
+  
   return {
     x: evt.clientX - rect.left,
     y: evt.clientY - rect.top

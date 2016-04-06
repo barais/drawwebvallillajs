@@ -1,7 +1,6 @@
 
 
 export class Drawing {
-  constructor() { }
   private forms: Array<MyForm> = new Array<MyForm>();
   public getForms(): Array<MyForm> {
     return this.forms;
@@ -37,7 +36,6 @@ export class MyForm {
   public getCouleur(): string {
     return this.couleur;
   }
-  public paint() { }
 
 }
 

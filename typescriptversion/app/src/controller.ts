@@ -10,9 +10,6 @@ import * as interaction from "./interaction";
     }
     private currentShape: model.MyForm;
 
-
-
-
     // Implémentez ici les 3 fonctions onInteractionStart, onInteractionUpdate et onInteractionEnd
 
     public onInteractionStart(dnd: interaction.DnD) {

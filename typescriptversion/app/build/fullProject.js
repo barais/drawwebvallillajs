@@ -1,3 +1,8 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 System.register("model", [], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
@@ -5,20 +10,21 @@ System.register("model", [], function(exports_1, context_1) {
     return {
         setters:[],
         execute: function() {
-            class Drawing {
-                constructor() {
+            Drawing = (function () {
+                function Drawing() {
                     this.forms = new Array();
                 }
-                getForms() {
+                Drawing.prototype.getForms = function () {
                     return this.forms;
-                }
-                addForm(form) {
+                };
+                Drawing.prototype.addForm = function (form) {
                     this.forms.push(form);
-                }
-            }
+                };
+                return Drawing;
+            }());
             exports_1("Drawing", Drawing);
-            class MyForm {
-                constructor(initX, initY, finalX, finalY, epaisseur, couleur) {
+            MyForm = (function () {
+                function MyForm(initX, initY, finalX, finalY, epaisseur, couleur) {
                     this.initX = initX;
                     this.initY = initY;
                     this.finalX = finalX;
@@ -26,32 +32,42 @@ System.register("model", [], function(exports_1, context_1) {
                     this.epaisseur = epaisseur;
                     this.couleur = couleur;
                 }
-                getInitX() {
+                MyForm.prototype.getInitX = function () {
                     return this.initX;
-                }
-                getInitY() {
+                };
+                MyForm.prototype.getInitY = function () {
                     return this.initY;
-                }
-                getFinalX() {
+                };
+                MyForm.prototype.getFinalX = function () {
                     return this.finalX;
-                }
-                getFinalY() {
+                };
+                MyForm.prototype.getFinalY = function () {
                     return this.finalY;
-                }
-                getEpaisseur() {
+                };
+                MyForm.prototype.getEpaisseur = function () {
                     return this.epaisseur;
-                }
-                getCouleur() {
+                };
+                MyForm.prototype.getCouleur = function () {
                     return this.couleur;
-                }
-                paint() { }
-            }
+                };
+                return MyForm;
+            }());
             exports_1("MyForm", MyForm);
-            class Line extends MyForm {
-            }
+            Line = (function (_super) {
+                __extends(Line, _super);
+                function Line() {
+                    _super.apply(this, arguments);
+                }
+                return Line;
+            }(MyForm));
             exports_1("Line", Line);
-            class Rectangle extends MyForm {
-            }
+            Rectangle = (function (_super) {
+                __extends(Rectangle, _super);
+                function Rectangle() {
+                    _super.apply(this, arguments);
+                }
+                return Rectangle;
+            }(MyForm));
             exports_1("Rectangle", Rectangle);
         }
     }
@@ -72,7 +88,7 @@ System.register("view", ["model"], function(exports_2, context_2) {
             model.Drawing.prototype.draw = function (canvas, ctx) {
                 ctx.fillStyle = '#F0F0F0'; // set canvas' background color
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                this.getForms().forEach((eltDuTableau) => {
+                this.getForms().forEach(function (eltDuTableau) {
                     eltDuTableau.draw(canvas, ctx);
                 });
             };
@@ -111,47 +127,49 @@ System.register("interaction", [], function(exports_3, context_3) {
     return {
         setters:[],
         execute: function() {
-            class DnD {
-                constructor(boundingObject, interactor) {
+            DnD = (function () {
+                function DnD(boundingObject, interactor) {
+                    var _this = this;
                     this.boundingObject = boundingObject;
                     this.initX = 0;
                     this.initY = 0;
                     this.finalX = 0;
                     this.finalY = 0;
                     this.pression = false;
-                    this.boundingObject.onmousedown = (evt) => {
-                        this.pression = true;
-                        this.initX = getMousePosition(boundingObject, evt).x;
-                        this.initY = getMousePosition(boundingObject, evt).y;
-                        interactor.onInteractionStart(this);
+                    this.boundingObject.onmousedown = function (evt) {
+                        _this.pression = true;
+                        _this.initX = getMousePosition(boundingObject, evt).x;
+                        _this.initY = getMousePosition(boundingObject, evt).y;
+                        interactor.onInteractionStart(_this);
                     };
-                    this.boundingObject.onmousemove = (evt) => {
-                        if (this.pression) {
-                            this.finalX = getMousePosition(boundingObject, evt).x;
-                            this.finalY = getMousePosition(boundingObject, evt).y;
-                            interactor.onInteractionUpdate(this);
+                    this.boundingObject.onmousemove = function (evt) {
+                        if (_this.pression) {
+                            _this.finalX = getMousePosition(boundingObject, evt).x;
+                            _this.finalY = getMousePosition(boundingObject, evt).y;
+                            interactor.onInteractionUpdate(_this);
                         }
                     };
-                    this.boundingObject.onmouseup = (evt) => {
-                        this.pression = false;
-                        this.finalX = getMousePosition(boundingObject, evt).x;
-                        this.finalY = getMousePosition(boundingObject, evt).y;
-                        interactor.onInteractionEnd(this);
+                    this.boundingObject.onmouseup = function (evt) {
+                        _this.pression = false;
+                        _this.finalX = getMousePosition(boundingObject, evt).x;
+                        _this.finalY = getMousePosition(boundingObject, evt).y;
+                        interactor.onInteractionEnd(_this);
                     };
                 }
-                getInitX() {
+                DnD.prototype.getInitX = function () {
                     return this.initX;
-                }
-                getInitY() {
+                };
+                DnD.prototype.getInitY = function () {
                     return this.initY;
-                }
-                getFinalX() {
+                };
+                DnD.prototype.getFinalX = function () {
                     return this.finalX;
-                }
-                getFinalY() {
+                };
+                DnD.prototype.getFinalY = function () {
                     return this.finalY;
-                }
-            }
+                };
+                return DnD;
+            }());
             exports_3("DnD", DnD);
             ;
             ;
@@ -172,16 +190,16 @@ System.register("controller", ["model", "interaction"], function(exports_4, cont
                 interaction = interaction_1;
             }],
         execute: function() {
-            class Pencil {
+            Pencil = (function () {
                 // Liez ici les widgets à la classe pour modifier les attributs présents ci-dessus.
-                constructor(ctx, drawing, canvas) {
+                function Pencil(ctx, drawing, canvas) {
                     this.ctx = ctx;
                     this.drawing = drawing;
                     this.canvas = canvas;
                     new interaction.DnD(canvas, this);
                 }
                 // Implémentez ici les 3 fonctions onInteractionStart, onInteractionUpdate et onInteractionEnd
-                onInteractionStart(dnd) {
+                Pencil.prototype.onInteractionStart = function (dnd) {
                     var epaisseur = +document.getElementById("spinnerWidth").value;
                     var color = document.getElementById("colour").value;
                     if (document.getElementById("butRect").checked) {
@@ -190,26 +208,27 @@ System.register("controller", ["model", "interaction"], function(exports_4, cont
                     else {
                         this.currentShape = new model.Line(dnd.getInitX(), dnd.getInitY(), dnd.getFinalX(), dnd.getFinalY(), epaisseur, color);
                     }
-                }
+                };
                 ;
-                onInteractionUpdate(dnd) {
+                Pencil.prototype.onInteractionUpdate = function (dnd) {
                     if (this.currentShape != null) {
                         this.currentShape.finalX = dnd.getFinalX();
                         this.currentShape.finalY = dnd.getFinalY();
                         this.drawing.draw(this.canvas, this.ctx);
                         this.currentShape.draw(this.canvas, this.ctx);
                     }
-                }
+                };
                 ;
-                onInteractionEnd(dnd) {
+                Pencil.prototype.onInteractionEnd = function (dnd) {
                     this.currentShape.finalX = dnd.getFinalX();
                     this.currentShape.finalY = dnd.getFinalY();
                     this.currentShape.draw(this.canvas, this.ctx);
                     this.drawing.addForm(this.currentShape);
                     this.drawing.draw(this.canvas, this.ctx);
-                }
+                };
                 ;
-            }
+                return Pencil;
+            }());
             exports_4("Pencil", Pencil);
             ;
         }
@@ -245,14 +264,14 @@ System.register("main", ["model", "view", "controller"], function(exports_5, con
             pencil = new ctrl.Pencil(ctx, drawing, canvas);
             //drawing.paint();
             drawing.draw(canvas, ctx);
-            document.getElementById('save').onclick = (e) => {
+            document.getElementById('save').onclick = function (e) {
                 var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance
                 xmlhttp.open("POST", "/rest/titi");
                 xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
                 console.log('{ \"figs\" : ' + JSON.stringify(drawing.getForms()) + '}');
                 xmlhttp.send('{ \"figs\" : ' + JSON.stringify(drawing.getForms()) + '}');
             };
-            document.getElementById('load').onclick = (e) => {
+            document.getElementById('load').onclick = function (e) {
                 var req = new XMLHttpRequest(); // new HttpRequest instance
                 req.open("GET", "/rest/titi/load");
                 req.onreadystatechange = function (aEvt) {
@@ -269,7 +288,6 @@ System.register("main", ["model", "view", "controller"], function(exports_5, con
                     }
                 };
                 req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-                //	console.log('{ \"figs\" : '+ JSON.stringify(drawing.getForms())+'}');
                 req.send();
             };
         }

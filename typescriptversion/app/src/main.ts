@@ -48,7 +48,6 @@ document.getElementById('load').onclick = (e:MouseEvent)=> {
 		  }
 		};
 		req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-//	console.log('{ \"figs\" : '+ JSON.stringify(drawing.getForms())+'}');
 		req.send();
 
 };

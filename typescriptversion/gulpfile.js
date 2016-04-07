@@ -3,7 +3,6 @@ var ts = require('gulp-typescript');
 //var merge = require('merge2');  // Require separate installation
 var tslint = require('gulp-tslint');
 var sourcemaps = require('gulp-sourcemaps');
-var path = require('path');
 
 var paths = {
   tscripts : { src : ['app/src/**/*.ts'],
@@ -24,11 +23,6 @@ gulp.task('build', function() {
      return tsResult.js
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('.'));
-/*                    return merge([ // Merge the two output streams, so this task is finished when the IO of both operations are done.
-                        tsResult.dts.pipe(gulp.dest('./definitions')),
-                        tsResult.js.pipe(gulp.dest('.')).pipe(sourcemaps.write("."))
-                    ]);*/
-
 });
 gulp.task('watch', ['build'], function() {
     gulp.watch(paths.tscripts.src, ['build']);

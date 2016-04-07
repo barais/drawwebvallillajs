@@ -2,6 +2,7 @@ import * as model from "./model";
 import * as view from "./view";
 import * as ctrl from "./controller";
 
+//require to apply aspect
 view.init();
 
 var canvas = <HTMLCanvasElement> document.getElementById('myCanvas');

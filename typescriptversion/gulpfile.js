@@ -3,6 +3,22 @@ var ts = require('gulp-typescript');
 //var merge = require('merge2');  // Require separate installation
 var tslint = require('gulp-tslint');
 var sourcemaps = require('gulp-sourcemaps');
+var server = require('gulp-server-livereload');
+
+gulp.task('webserver',['watch'], function() {
+  gulp.src('app')
+    .pipe(server({
+      livereload: true,
+      directoryListing: {
+        enable: true,
+        path:   'app',
+      },
+      open: true,
+      filter: function (filename, cb) {
+         cb(!/\.ts$|node_modules/.test(filename));
+       }
+    }));
+});
 
 var paths = {
   tscripts : { src : ['app/src/**/*.ts'],
@@ -19,7 +35,8 @@ gulp.task('build', function() {
   var tsResult = tsProject
      .src(paths.tscripts.src)
      .pipe(sourcemaps.init())
-     .pipe(ts(tsProject));
+     .pipe(ts(tsProject))
+     ;
      return tsResult.js
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('.'));

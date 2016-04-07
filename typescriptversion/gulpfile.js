@@ -1,48 +1,39 @@
 var gulp   = require('gulp');
-var tsc    = require('gulp-tsc');
-var shell  = require('gulp-shell');
-var runseq = require('run-sequence');
+var ts = require('gulp-typescript');
+//var merge = require('merge2');  // Require separate installation
 var tslint = require('gulp-tslint');
+var sourcemaps = require('gulp-sourcemaps');
+var path = require('path');
 
 var paths = {
   tscripts : { src : ['app/src/**/*.ts'],
-        dest : 'app/build' }
+        dest : 'build' }
 };
 
-gulp.task('default', ['lint', 'buildrun']);
+gulp.task('default', ['lint', 'build']);
 
-// ** Running ** //
+var tsProject = ts.createProject('tsconfig.json');
 
-gulp.task('run', shell.task([
-  'node app/build/index.js'
-]));
 
-gulp.task('buildrun', function (cb) {
-  runseq('build', 'run', cb);
+
+gulp.task('build', function() {
+  var tsResult = tsProject
+     .src(paths.tscripts.src)
+     .pipe(sourcemaps.init())
+     .pipe(ts(tsProject));
+     return tsResult.js
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('.'));
+/*                    return merge([ // Merge the two output streams, so this task is finished when the IO of both operations are done.
+                        tsResult.dts.pipe(gulp.dest('./definitions')),
+                        tsResult.js.pipe(gulp.dest('.')).pipe(sourcemaps.write("."))
+                    ]);*/
+
+});
+gulp.task('watch', ['build'], function() {
+    gulp.watch(paths.tscripts.src, ['build']);
 });
 
-// ** Watching ** //
-
-gulp.task('watch', function () {
-  gulp.watch(paths.tscripts.src, ['compile:typescript']);
-});
-
-gulp.task('watchrun', function () {
-  gulp.watch(paths.tscripts.src, runseq('compile:typescript', 'run'));
-});
-
-// ** Compilation ** //
-
-gulp.task('build', ['compile:typescript']);
-gulp.task('compile:typescript', function () {
-  return gulp
-  .src(paths.tscripts.src)
-  .pipe(tsc({
-    module: "commonjs",
-    emitError: false
-  }))
-  .pipe(gulp.dest(paths.tscripts.dest));
-});
 
 // ** Linting ** //
 

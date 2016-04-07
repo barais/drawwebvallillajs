@@ -16,9 +16,10 @@ import * as interaction from "./interaction";
       var epaisseur: number = +(document.getElementById("spinnerWidth") as HTMLInputElement).value;
       var color: string = (document.getElementById("colour") as HTMLInputElement).value;
 
-      if ((document.getElementById("butRect") as HTMLInputElement).checked){
+      if ( (document.getElementById("butRect") as HTMLInputElement).checked ) {
         this.currentShape = new model.Rectangle(dnd.getInitX(), dnd.getInitY(), dnd.getFinalX(), dnd.getFinalY(), epaisseur, color);
-      }else{
+      }
+      else{
         this.currentShape = new model.Line(dnd.getInitX(), dnd.getInitY(), dnd.getFinalX(), dnd.getFinalY(), epaisseur, color);
       }
     };

@@ -4,7 +4,7 @@ export class Drawing {
   private forms: Array<MyForm> = new Array<MyForm>();
   public getForms(): Array<MyForm> {
     return this.forms;
-  }
+  } 
   public addForm(form: MyForm) {
     this.forms.push(form);
   }

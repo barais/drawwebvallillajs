@@ -7,7 +7,7 @@ npm install #to update the dependencies
 gulp watch # to run the compiler in watch mode
 ```
 
-You can then use atom to edit the project?
+You can then use |atom](atom.io) to edit the project?
 
 
 ## License

@@ -5,6 +5,8 @@ A simple MVC web application (simple drawing editor) developed with typescript 1
 ```bash
 npm install #to update the dependencies
 gulp watch # to run the compiler in watch mode
+#or
+gulp webserver # to run a webserver with live reload in watch mode
 ```
 
 You can then use [atom](atom.io) to edit the project?
